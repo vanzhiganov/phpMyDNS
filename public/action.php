@@ -390,6 +390,6 @@ switch($strMethod) {
 		exit();
 	break;
 	default:
-		echo json_encode(array('status'=>0,"message"=>"unknown method"));
+		echo json_encode(array('status' => 54, "message" => "Unknown method"));
 	break;
 }

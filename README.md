@@ -50,3 +50,4 @@ Error codes
 - `51` - ZONE_ID NOT SPECIFIED
 - `52` - DESTINATION NOT SPECIFIED
 - `53` - TYPE not specified
+- `54` - Method unknown
