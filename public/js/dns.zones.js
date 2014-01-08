@@ -22,7 +22,7 @@ function zone_get() {
 			if (zones.errno == 0) {
 				if (zones.total > 0) {
 					$.each(zones.results, function(key, val) {
-						$('#zones tbody').append("<tr><td><a href='zones.php?zone="+val.name+"' onclick='record_get(\""+val.name+"\")'>"+val.name+"</td></tr>");
+						$('#zones tbody').append("<tr><td><a href='records.php?zone="+val.name+"' onclick='record_get(\""+val.name+"\")'>"+val.name+"</td></tr>");
 					});
 				}
 			}
@@ -37,7 +37,7 @@ function zone_add(zone_name) {
 				$(".alert").hide();
 				$("#alert-zone").fadeIn(400).html('<div class="alert alert-success"><a class="close" data-dismiss="success">×</a><span><b>Успешно!</b> Зона добавлена.</span></div>');
 
-				$('#zones tbody').append("<tr><td><a href='#' onclick='record_get(\""+name+"\")'>"+name+"</a></td></tr>");
+				$('#zones tbody').append("<tr><td><a href='records.php?zone="+name+"' onclick='record_get(\""+name+"\")'>"+name+"</a></td></tr>");
 			}
 		}
 	});

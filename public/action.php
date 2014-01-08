@@ -251,28 +251,28 @@ switch($strMethod) {
 
 		switch ($type) {
 			case 'A':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ('{$zone}','{$host}','{$type}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$destination}') RETURNING id");
 			break;
 			case 'NS':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ('{$zone}','{$host}','{$type}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$destination}') RETURNING id");
 			break;
 			case 'CNAME':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ('{$zone}','{$host}','{$type}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$destination}') RETURNING id");
 			break;
 			case 'PTR':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ('{$zone}','{$host}','{$type}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$destination}') RETURNING id");
 			break;
 			case 'MX':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,pri,destination) VALUES ('{$zone}','{$host}','{$type}','{$pri}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,pri,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$pri}','{$destination}') RETURNING id");
 			break;
 			case 'AAAA':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ('{$zone}','{$host}','{$type}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$destination}') RETURNING id");
 			break;
 			case 'TXT':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ('{$zone}','{$host}','{$type}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$destination}') RETURNING id");
 			break;
 			case 'SRV':
-				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ('{$zone}','{$host}','{$type}','{$destination}') RETURNING id");
+				$res = pg_query($link, "INSERT INTO records (zone,host,type,destination) VALUES ((SELECT id from zones where name='{$zone}'),'{$host}','{$type}','{$destination}') RETURNING id");
 			break;
 		};
 
@@ -280,6 +280,8 @@ switch($strMethod) {
 
 		if ($row[0] > 0) {
 			exit(json_encode(array('status' => 0, 'results' => $row[0])));
+		} else {
+			exit(json_encode(array('status' => 57)));
 		}
 	break;
 	case 'record_get':
