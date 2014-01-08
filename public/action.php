@@ -4,7 +4,7 @@
  */
 
 error_reporting(E_ALL & E_NOTICE);
-ini_set('display_errors','On');
+ini_set('display_errors',1);
 
 session_start();
 
@@ -175,7 +175,7 @@ switch($strMethod) {
 	break;
 	case 'zone_delete':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -187,7 +187,7 @@ switch($strMethod) {
 		$num = pg_num_rows($res);
 		
 		if ($num == 0) {
-			echo json_encode(array('error'=>21));
+			echo json_encode(array('status'=>21));
 			exit();
 		}
 		
@@ -197,13 +197,13 @@ switch($strMethod) {
 		pg_query("DELETE FROM zones WHERE id = '{$zone_id}'");
 		pg_query("DELETE FROM records WHERE zone '{$zone_id}')");
 		
-		echo json_encode(array('error'=>0));
+		echo json_encode(array('status'=>0));
 		exit();
 	break;
 
 	case 'record_a_add':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -218,7 +218,7 @@ switch($strMethod) {
 		$num = pg_num_rows($res);
 		
 		if ($num == 0) {
-			echo json_encode(array('error'=>21));
+			echo json_encode(array('status'=>21));
 			exit();
 		}
 
@@ -226,17 +226,17 @@ switch($strMethod) {
 		$zone_id = $row[0];
 
 		if ($zone == null) {
-			echo json_encode(array('error'=>51));
+			echo json_encode(array('status'=>51));
 			exit();
 		}
 
 		if ($host == null) {
-			echo json_encode(array('error'=>50));
+			echo json_encode(array('status'=>50));
 			exit();
 		}
 
 		if ($destination == null) {
-			echo json_encode(array('error'=>52));
+			echo json_encode(array('status'=>52));
 			exit();
 		}
 
@@ -244,14 +244,14 @@ switch($strMethod) {
 		$row = pg_fetch_row($res);
 
 		if ($row[0] > 0) {
-			echo json_encode(array('error'=>0,'results'=>$row[0]));
+			echo json_encode(array('status'=>0,'results'=>$row[0]));
 			exit();
 		}
 	break;
 
 	case 'record_add':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -264,22 +264,22 @@ switch($strMethod) {
 
 
 		if ($host == null) {
-			echo json_encode(array('error'=>50));
+			echo json_encode(array('status'=>50));
 			exit();
 		}
 
 		if ($zone == null) {
-			echo json_encode(array('error'=>51));
+			echo json_encode(array('status'=>51));
 			exit();
 		}
 
 		if ($type == null) {
-			echo json_encode(array('error'=>53));
+			echo json_encode(array('status'=>53));
 			exit();
 		}
 
 		if ($destination == null) {
-			echo json_encode(array('error'=>52));
+			echo json_encode(array('status'=>52));
 			exit();
 		}
 
@@ -313,13 +313,13 @@ switch($strMethod) {
 		$row = pg_fetch_row($res);
 
 		if ($row[0] > 0) {
-			echo json_encode(array('error'=>0,'results'=>$row[0]));
+			echo json_encode(array('status'=>0,'results'=>$row[0]));
 			exit();
 		}
 	break;
 	case 'record_get':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -331,7 +331,7 @@ switch($strMethod) {
 		$num = pg_num_rows($res);
 		
 		if ($num == 0) {
-			echo json_encode(array('error'=>21));
+			echo json_encode(array('status'=>21));
 			exit();
 		}
 		
@@ -341,7 +341,7 @@ switch($strMethod) {
 		$res = pg_query($link, "SELECT * FROM records WHERE zone = '{$zone_id}'");
 
 		$result['total'] = pg_num_rows($res);
-		$result['error'] = 0;
+		$result['status'] = 0;
 		$i = 0;
 		while($rows = pg_fetch_row($res)){
 			$result['results'][$i]['id'] = $rows[0];
@@ -356,14 +356,14 @@ switch($strMethod) {
 	break;
 	case 'record_update':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 		// TODO: ...
 	break;
 	case 'record_delete':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -376,7 +376,7 @@ switch($strMethod) {
 		$num = pg_num_rows($res);
 		
 		if ($num == 0) {
-			echo json_encode(array('error'=>21));
+			echo json_encode(array('status'=>21));
 			exit();
 		}
 		
@@ -386,7 +386,10 @@ switch($strMethod) {
 		// TODO: check exists record
 		pg_query($link, "DELETE FROM records WHERE id = '{$record}' AND zone = '{$zone_id}'");
 
-		echo json_encode(array('error'=>0));
+		echo json_encode(array('status'=>0));
 		exit();
+	break;
+	default:
+		echo json_encode(array('status'=>0,"message"=>"unknown method"));
 	break;
 }
