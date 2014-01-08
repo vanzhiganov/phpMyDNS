@@ -53,3 +53,4 @@ Error codes
 - `54` - Method unknown
 - `55` - SQL: Member registration failed
 - `56` - SQL: Member auth failed
+- `57` - New record add fail
