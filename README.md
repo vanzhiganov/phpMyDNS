@@ -52,4 +52,4 @@ Error codes
 - `53` - TYPE not specified
 - `54` - Method unknown
 - `55` - SQL: Member registration failed
-- `55` - SQL: Member auth failed
+- `56` - SQL: Member auth failed
