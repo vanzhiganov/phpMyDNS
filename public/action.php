@@ -17,7 +17,7 @@ $strMethod = (isset($_REQUEST['method'])) ? $_REQUEST['method'] : null;
 switch($strMethod) {
 	case 'member_add':
 		if ((isset($_SESSION['cloudnsru'])) & (isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>11));
+			echo json_encode(array('status' => 11));
 			exit();
 		}
 
@@ -30,7 +30,7 @@ switch($strMethod) {
 
 		// Check username
 		if ($username == null) {
-			echo json_encode(array('error'=>13));
+			echo json_encode(array('status' => 13));
 			exit();
 		}
 
@@ -43,7 +43,7 @@ switch($strMethod) {
 		$row = pg_fetch_row($result);
 
 		if ($row[0] > 0) {
-			echo json_encode(array('error'=>12));
+			echo json_encode(array('status'=>12));
 			exit();
 		}
 
@@ -52,14 +52,14 @@ switch($strMethod) {
 		$row = pg_fetch_row($res);
 
 		if ($row[0] > 0) {
-			echo json_encode(array('error'=>0,'results'=>$row[0]));
+			echo json_encode(array('status'=>0,'results'=>$row[0]));
 			exit();
 		}
 	break;
 	case 'member_auth':
 	case 'member_login':
 		if ((isset($_SESSION['cloudnsru'])) & (isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>11));
+			echo json_encode(array('status'=>11));
 			exit();
 		}
 
@@ -75,7 +75,7 @@ switch($strMethod) {
 		$row = pg_fetch_row($result);
 
 		if ($row[0] == 0) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -86,7 +86,7 @@ switch($strMethod) {
 		$_SESSION['cloudnsru']['member_id'] = $row[0];
 		$_SESSION['cloudnsru']['username'] = $username;
 
-		echo json_encode(array('error'=>0));
+		echo json_encode(array('status'=>0));
 		exit();
 	break;
 	case 'member_logout':
@@ -97,24 +97,24 @@ switch($strMethod) {
 		unset($_SESSION['cloudnsru']['username']);
 		unset($_SESSION['cloudnsru']);
 
-		echo json_encode(array('error'=>0));
+		echo json_encode(array('status'=>0));
 		exit();
 	break;
 	case 'member_get':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 	break;
 	case 'member_update':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 	break;
 	case 'member_detele':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -123,7 +123,7 @@ switch($strMethod) {
 
 	case 'zone_add':
 		if ((!isset($_SESSION['cloudnsru'])) & (!isset($_SESSION['cloudnsru']['member_id']))) {
-			echo json_encode(array('error'=>10));
+			echo json_encode(array('status'=>10));
 			exit();
 		}
 
@@ -135,7 +135,7 @@ switch($strMethod) {
 		$row = pg_fetch_row($res);
 
 		if ($row[0] > 0) {
-			echo json_encode(array('error'=>20));
+			echo json_encode(array('status'=>20));
 			exit();
 		}
 
