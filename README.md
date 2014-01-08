@@ -51,3 +51,5 @@ Error codes
 - `52` - DESTINATION NOT SPECIFIED
 - `53` - TYPE not specified
 - `54` - Method unknown
+- `55` - SQL: Member registration failed
+- `55` - SQL: Member auth failed

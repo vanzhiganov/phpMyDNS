@@ -30,21 +30,18 @@ switch($strMethod) {
 
 		// Check username
 		if ($username == null) {
-			echo json_encode(array('status' => 13));
-			exit();
+			exit(json_encode(array('status' => 13)));
 		}
 
 		// Check exists username
 		$result = pg_query($link, "SELECT COUNT(*) FROM users WHERE username = '{$username}' AND admin = 'no';");
 		if (!$result) {
-			echo "Произошла ошибка.\n";
-			exit;
+			exit(json_encode(array('status' => 55)));
 		}
 		$row = pg_fetch_row($result);
 
 		if ($row[0] > 0) {
-			echo json_encode(array('status'=>12));
-			exit();
+			exit(json_encode(array('status' => 12)));
 		}
 
 		// All right
@@ -52,8 +49,7 @@ switch($strMethod) {
 		$row = pg_fetch_row($res);
 
 		if ($row[0] > 0) {
-			echo json_encode(array('status'=>0,'results'=>$row[0]));
-			exit();
+			exit(json_encode(array('status' => 0, 'results' => $row[0])));
 		}
 	break;
 	case 'member_auth':
@@ -69,14 +65,12 @@ switch($strMethod) {
 
 		$result = pg_query($link, "SELECT COUNT(*) FROM users WHERE username = '{$username}' AND password = '{$password_md5}' AND admin = 'no';");
 		if (!$result) {
-			echo "Произошла ошибка.\n";
-			exit;
+			exit(json_encode(array('status' => 56)));
 		}
 		$row = pg_fetch_row($result);
 
 		if ($row[0] == 0) {
-			echo json_encode(array('status'=>10));
-			exit();
+			exit(json_encode(array('status' => 10)));
 		}
 
 
@@ -386,10 +380,9 @@ switch($strMethod) {
 		// TODO: check exists record
 		pg_query($link, "DELETE FROM records WHERE id = '{$record}' AND zone = '{$zone_id}'");
 
-		echo json_encode(array('status'=>0));
-		exit();
+		exit(json_encode(array('status' => 0)));
 	break;
 	default:
-		echo json_encode(array('status' => 54, "message" => "Unknown method"));
+		exit(json_encode(array('status' => 54)));
 	break;
 }
