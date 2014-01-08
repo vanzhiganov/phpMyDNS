@@ -11,6 +11,8 @@ phpMyDNS
 
 `apt-get install php5-pgsql`
 
+`apt-get install bind9`
+
 ### Add database user
 
 `CREATE USER dnsuser WITH PASSWORD 'superPassword';`
