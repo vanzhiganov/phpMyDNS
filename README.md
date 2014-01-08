@@ -1,6 +1,32 @@
 phpMyDNS
 ========
 
+## Installation
+
+### PostgreSQL server
+
+`apt-get install postgresql`
+
+`apt-get install postgresql-server-dev-9.1`
+
+`apt-get install php5-pgsql`
+
+### Add database user
+
+`CREATE USER dnsuser WITH PASSWORD 'superPassword';`
+
+`CREATE DATABASE dns;`
+
+`GRANT ALL PRIVILEGES ON DATABASE dns to dnsuser;`
+
+### Database structure
+
+`psql -h localhost -Udnsuser -W dns < /var/www/phpMyDNS/extra/structure.sql`
+
+
+
+
+
 Error codes
 -----------
 
